@@ -107,6 +107,6 @@ public class MainActivity extends AppCompatActivity {
     public void selectActivity(View view) {
         DialogFragment menuDialogFragment= new MenuDialogFragment();
         menuDialogFragment.show(getSupportFragmentManager(),"Tag");
-        //Change By Jasraj Fulwariya
+        //Change By Karan
      }
 }
