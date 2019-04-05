@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/dialogLayoutRoot"
+    android:background="#20000000"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/background_white_corner"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_width="150dp"
+        android:layout_height="170dp">
+        <RelativeLayout
+            android:background="@drawable/item_white_to_gray"
+            android:padding="8dp"
+            android:id="@+id/dialogLayoutContacts"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@drawable/ic_contact_phone_blue_24dp"
+                android:id="@+id/dialogContactsDrawable"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_centerVertical="true"
+                android:text="@string/contacts"
+                android:layout_toEndOf="@+id/dialogContactsDrawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:background="@drawable/item_white_to_gray"
+            android:padding="8dp"
+            android:id="@+id/dialogLayoutCallLog"
+            android:layout_below="@id/dialogLayoutContacts"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@drawable/ic_videocam_black_24dp"
+                android:id="@+id/dialogCallLogDrawable"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_centerVertical="true"
+                android:text="@string/calls"
+                android:layout_toEndOf="@+id/dialogCallLogDrawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dialogLayoutProfile"
+            android:background="@drawable/item_white_to_gray"
+            android:padding="8dp"
+            android:layout_below="@id/dialogLayoutCallLog"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@drawable/ic_profile_blue_24dp"
+                android:id="@+id/dialogProfileDrawable"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginStart="16dp"
+                android:layout_centerVertical="true"
+                android:text="@string/profile"
+                android:layout_toEndOf="@+id/dialogProfileDrawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
