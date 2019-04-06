@@ -27,18 +27,12 @@ public class LogInManager extends AppCompatActivity {
         vibrateButton = (Button) findViewById(R.id.LoginSubmit);
         vibe = (Vibrator) LogInManager.this.getSystemService(VIBRATOR_SERVICE);
         loginPhone=(EditText)findViewById(R.id.LoginEditPhone);
-        /*phoneNumberString=loginPhone.getText().toString().trim();
-        phoneWithId ="+91"+phoneNumberString;
-        phoneNumberLength=phoneNumberString.length();
-        if(phoneNumberLength==10)
-            vibrateButton.setBackgroundColor(R.drawable.logintext);*/
-    }
+        }
 
     public void loginSubmit(View view) {
         phoneNumberString=loginPhone.getText().toString().trim();;
         phoneNumberLength=phoneNumberString.length();
-        if(phoneNumberLength<10||phoneNumberLength>10)
-        {
+        if(phoneNumberLength<10||phoneNumberLength>10) {
             vibrateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

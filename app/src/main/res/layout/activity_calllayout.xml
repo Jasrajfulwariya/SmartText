@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/callTextview"
-        android:layout_width="500dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:padding="10dp"
         android:text="Call History"
