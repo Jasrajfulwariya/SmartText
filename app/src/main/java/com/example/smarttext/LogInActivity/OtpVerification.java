@@ -1,4 +1,4 @@
-package com.example.smarttext;
+package com.example.smarttext.LogInActivity;
 
 
 import android.content.Intent;
@@ -6,10 +6,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,6 +15,9 @@ import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
+import com.example.smarttext.MainActivity;
+import com.example.smarttext.R;
+import com.example.smarttext.utils.Config;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -27,9 +27,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-
-public class otpverification<mCallBacks> extends AppCompatActivity {
-
+public class OtpVerification<mCallBacks> extends AppCompatActivity {
     TextView mOtpTimer;
     TextView mResendB;
     String phoneVerify;
@@ -42,7 +40,6 @@ public class otpverification<mCallBacks> extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private ProgressBar otpLoading;
     private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,33 +47,30 @@ public class otpverification<mCallBacks> extends AppCompatActivity {
         init();
         allListener();
         timer();
-        Bundle b1=getIntent().getExtras();
-        phoneVerify =b1.getString("phone_number");
+        otpCallBack();
+        phoneVerify =getIntent().getExtras().getString(Config.PHONE_NUMBER);
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneVerify,        // Phone number to verify
                 10,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
-                otpverification.this,
+                this,
                 mCallBacks);
-
-
+    }
+    private void otpCallBack()
+    {
         mCallBacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
                 signInWithPhoneAuthCredential(phoneAuthCredential);
-                Intent I1=new Intent(otpverification.this,MainActivity.class);
+                Intent I1=new Intent(OtpVerification.this, MainActivity.class);
                 startActivity(I1);
             }
-
             @Override
             public void onVerificationFailed(FirebaseException e) {
 
-                Toast.makeText(otpverification.this,"error in verification",Toast.LENGTH_LONG).show();
+                Toast.makeText(OtpVerification.this,"error in verification",Toast.LENGTH_LONG).show();
 
             }
-
-
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
@@ -87,9 +81,8 @@ public class otpverification<mCallBacks> extends AppCompatActivity {
             }
 
         };
-
     }
-    void timer()
+    private void timer()
     {
         if(otpFlag ==0)
         {
@@ -119,7 +112,7 @@ public class otpverification<mCallBacks> extends AppCompatActivity {
             }.start();
         }
     }
-    void allListener()
+    private void allListener()
     {
         mResendB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,13 +120,13 @@ public class otpverification<mCallBacks> extends AppCompatActivity {
                 if(mOtpTimer.getText()=="0")
                 {
                     mResendB.setTextColor(getResources().getColor(R.color.GREY));
+                    timer();
+                    //TODO: Resand Otp;
                 }
-                timer();
-                //TODO: Resand Otp;
             }
         });
     }
-    void init()
+    private void init()
     {
         otpLoading=(ProgressBar)findViewById(R.id.otpProgressBar);
         mOtpTimer=findViewById(R.id.otpTimer);
@@ -153,17 +146,15 @@ public class otpverification<mCallBacks> extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
                             FirebaseUser user = task.getResult().getUser();
-
-                            Intent LoggedIn = new Intent(otpverification.this,MainActivity.class);
+                            Intent LoggedIn = new Intent(OtpVerification.this,MainActivity.class);
                             startActivity(LoggedIn);
                             finish();
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
 
-                            Toast.makeText(otpverification.this,"error",Toast.LENGTH_LONG).show();
+                            Toast.makeText(OtpVerification.this,"error",Toast.LENGTH_LONG).show();
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid

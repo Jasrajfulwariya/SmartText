@@ -17,10 +17,13 @@
         android:background="@color/design_default_color_primary_dark"
         android:textColor="#FFFFFF" />
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/callrecycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/callTextview"
-        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
 </android.widget.RelativeLayout>

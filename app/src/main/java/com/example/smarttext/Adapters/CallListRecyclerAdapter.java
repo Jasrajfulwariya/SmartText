@@ -1,4 +1,4 @@
-package com.example.smarttext;
+package com.example.smarttext.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,15 +10,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.smarttext.Adapters.ActiveListRecyclerAdapter;
+import com.example.smarttext.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class callListRecyclerView extends RecyclerView.Adapter<callListRecyclerView
+public class CallListRecyclerAdapter extends RecyclerView.Adapter<CallListRecyclerAdapter
         .ViewHolderSetActiveList> {
     Context mContext;
 
-    public callListRecyclerView(Context mContext) {
+    public CallListRecyclerAdapter(Context mContext) {
         this.mContext = mContext;
     }
 

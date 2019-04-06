@@ -10,7 +10,7 @@
     <style name="MainDialogTheme" parent="Theme.AppCompat.DialogWhenLarge">
         <item name="windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.DropDownUp</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
     </style>
 
 </resources>

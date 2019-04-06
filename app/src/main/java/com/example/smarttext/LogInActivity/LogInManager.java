@@ -1,4 +1,4 @@
-package com.example.smarttext;
+package com.example.smarttext.LogInActivity;
 
 import android.content.Intent;
 import android.os.Vibrator;
@@ -9,32 +9,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.math.BigInteger;
+import com.example.smarttext.R;
+import com.example.smarttext.utils.Config;
 
-public class Loginmanager extends AppCompatActivity {
+public class LogInManager extends AppCompatActivity {
 
     Vibrator vibe;
     int phoneNumberLength;
-    String phoneNumberString,phonewhithId;
+    String phoneNumberString;
     Button vibrateButton;
     EditText loginPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_manager);
         vibrateButton = (Button) findViewById(R.id.LoginSubmit);
-        vibe = (Vibrator) Loginmanager.this.getSystemService(VIBRATOR_SERVICE);
+        vibe = (Vibrator) LogInManager.this.getSystemService(VIBRATOR_SERVICE);
         loginPhone=(EditText)findViewById(R.id.LoginEditPhone);
-        phoneNumberString=loginPhone.getText().toString();
-        phonewhithId="+91"+phoneNumberString;
+        /*phoneNumberString=loginPhone.getText().toString().trim();
+        phoneWithId ="+91"+phoneNumberString;
         phoneNumberLength=phoneNumberString.length();
         if(phoneNumberLength==10)
-            vibrateButton.setBackgroundColor(R.drawable.logintext);
+            vibrateButton.setBackgroundColor(R.drawable.logintext);*/
     }
 
     public void loginSubmit(View view) {
-        phoneNumberString=loginPhone.getText().toString();;
+        phoneNumberString=loginPhone.getText().toString().trim();;
         phoneNumberLength=phoneNumberString.length();
         if(phoneNumberLength<10||phoneNumberLength>10)
         {
@@ -48,9 +49,9 @@ public class Loginmanager extends AppCompatActivity {
         }
         else
         {
-            Intent I1=new Intent(this,otpverification.class);
-            I1.putExtra("phone_number",phonewhithId);
-            startActivity(I1);
+            Intent verifyOtp=new Intent(this, OtpVerification.class);
+            verifyOtp.putExtra(Config.PHONE_NUMBER,"+91"+phoneNumberString);
+            startActivity(verifyOtp);
         }
     }
 }

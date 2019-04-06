@@ -1,13 +1,14 @@
-package com.example.smarttext;
+package com.example.smarttext.LogInActivity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.smarttext.Adapters.ActiveListRecyclerAdapter;
+import com.example.smarttext.R;
+import com.example.smarttext.Adapters.CallListRecyclerAdapter;
 
-public class calllayout extends AppCompatActivity {
+public class CallLayout extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +16,7 @@ public class calllayout extends AppCompatActivity {
         setContentView(R.layout.activity_calllayout);
         RecyclerView callreccle=(RecyclerView)findViewById(R.id.callrecycle);
         callreccle.setLayoutManager(new LinearLayoutManager(this));
-        callreccle.setAdapter(new callListRecyclerView(this));
+        callreccle.setAdapter(new CallListRecyclerAdapter(this));
     }
 }
 
