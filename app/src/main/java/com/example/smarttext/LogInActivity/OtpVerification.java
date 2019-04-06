@@ -38,7 +38,6 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
     private ProgressBar phoneBar,codeBar;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBacks;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
-    private ProgressBar otpLoading;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +128,7 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
     }
     private void init()
     {
-        otpLoading=(ProgressBar)findViewById(R.id.otpProgressBar);
+       // otpLoading=(ProgressBar)findViewById(R.id.otpProgressBar);
         mOtpTimer=findViewById(R.id.otpTimer);
         mResendB=findViewById(R.id.otpResend);
     }
@@ -142,6 +141,7 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
 
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth=FirebaseAuth.getInstance();
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
