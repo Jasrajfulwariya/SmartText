@@ -18,11 +18,11 @@ public class ContactData {
         this.name = name;
     }
 
-    public String getPhone_no() {
+    public String getPhoneNo() {
         return phone_no;
     }
 
-    public void setPhone_no(String phone_no) {
+    public void setPhoneNo(String phone_no) {
         this.phone_no = phone_no;
     }
 
