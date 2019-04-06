@@ -8,6 +8,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 public class MenuDialogFragment extends DialogFragment implements View.OnClickListener{
@@ -30,7 +32,6 @@ public class MenuDialogFragment extends DialogFragment implements View.OnClickLi
         mRootLayout=dialogView.findViewById(R.id.dialogLayoutRoot);
         mLayoutProfile=dialogView.findViewById(R.id.dialogLayoutProfile);
         return dialogView;
-
     }
 
     @Override
@@ -67,5 +68,4 @@ public class MenuDialogFragment extends DialogFragment implements View.OnClickLi
                  break;
         }
     }
-    //Adding CompletedBy Jasraj
 }

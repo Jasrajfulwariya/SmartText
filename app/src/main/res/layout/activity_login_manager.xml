@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".LogInActivity.LogInManager">
+
+    <RelativeLayout
+        android:id="@+id/logintoplogo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/mediumBlue">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/login12"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    <EditText
+        android:layout_marginTop="40dp"
+        android:padding="4dp"
+        android:id="@+id/LoginEditName"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/logintoplogo"
+        android:hint="  Name"
+        android:drawableLeft="@drawable/ic_account_black_24dp"
+        android:textColorHint="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/logintext"
+        android:drawablePadding="5dp"
+        android:inputType="text"
+        android:textColor="#FFFFFF" />
+
+    <EditText
+        android:padding="4dp"
+        android:drawableLeft="@drawable/ic_phone_android_black_24dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/LoginEditPhone"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/LoginEditName"
+        android:layout_centerHorizontal="true"
+        android:hint="  Phone Number"
+        android:drawablePadding="5dp"
+        android:textColorHint="#ffffff"
+        android:background="@drawable/logintext"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/LoginSubmit"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/LoginEditPhone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/logintext"
+        android:onClick="loginSubmit"
+        android:text="Submit"
+        android:textColor="#FFFFFF"
+        />
+
+</android.widget.RelativeLayout>
