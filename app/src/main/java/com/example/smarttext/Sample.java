@@ -1,5 +1,7 @@
 package com.example.smarttext;
 
+import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,18 +21,32 @@ public class Sample extends AppCompatActivity {
         setContentView(R.layout.activity_sample);
         mSample=findViewById(R.id.Samplemesage);
         mSampleButton=findViewById(R.id.SampleButton);
-        squlite=new SquliteDatabase(this);
+        squlite=new SquliteDatabase(this,"Amit");
     }
 
     public void fun_1(View view) {
-        boolean r1= squlite.addcontact("Karan","Jasraj");
+        boolean r1= squlite.addcontact("Karan","Amit");
         boolean r2= squlite.insertChat("Jasraj","hi","3:00","Hello","4:00");
     }
     public void fun_2(View view)
     {
-        String fetch_data=squlite.fetch_data("Jasraj");
-        mSample.setText(fetch_data);
+        Cursor cs=squlite.fetch_data("Jasraj");
+        StringBuffer buffer=new StringBuffer();
+        while (cs.moveToNext())
+        {
+            buffer.append("Id"+cs.getString(0));
+            buffer.append("Id"+cs.getString(1)+"\n");
 
+        }
+        showmesages("data",buffer.toString());
+    }
+    public void showmesages(String title,String message)
+    {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
 
 }

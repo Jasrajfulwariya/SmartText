@@ -1,4 +1,5 @@
 package com.example.smarttext;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,12 +12,12 @@ import static java.sql.Types.NULL;
 
 public class SquliteDatabase extends SQLiteOpenHelper {
 
-    private static final String Database_Name="Appdata.db";
+    private static final String Database_Name="Appdata1.db";
     private static final String Table_Name="User_Info";
-    String newtableName;
+    private static final String newtableName="chatbox";
     SQLiteDatabase mdatabase;
 
-    public SquliteDatabase(Context context) {
+    public SquliteDatabase(Context context ,String mtable_Name) {
         super(context,Database_Name,null, 1);
         SQLiteDatabase db=this.getWritableDatabase();
     }
@@ -26,16 +27,18 @@ public class SquliteDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table "+Table_Name+" (Main_user TEXT,Contacts TEXT)");
+        db.execSQL("create table "+newtableName+" (Contact_name TEXT,sender_Message TEXT,sender_Time TEXT,user_Message TEXT,user_Time TEXT)");
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("create table "+newtableName+"(Contact_name varchar(30),sender_Message varchar(30),sender_Time varchar(30),user_Message varchar(30),user_Time varchar(30))");
+        db.execSQL("create table "+newtableName+" (Contact_name TEXT,sender_Message TEXT,sender_Time " +
+                "TEXT,user_Message TEXT,user_Time TEXT)");
+
     }
     public boolean addcontact(String Main_user ,String new_Contact)
     {
-        newtableName=new_Contact;
-        SQLiteDatabase db1;
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         String query="Select Contacts from "+Table_Name+" where Contacts='"+new_Contact+"'";
@@ -58,23 +61,23 @@ public class SquliteDatabase extends SQLiteOpenHelper {
 
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put("msName",sender_Name);
-        contentValues.put("msMessage",sender_Message);
-        contentValues.put("msTime",sender_Time);
-        contentValues.put("muMessage",user_Message);
-        contentValues.put("muTime",user_Time);
+        contentValues.put("Contact_name",sender_Name);
+        contentValues.put("sender_Message",sender_Message);
+        contentValues.put("sender_Time",sender_Time);
+        contentValues.put("user_Message",user_Message);
+        contentValues.put("user_Time",user_Time);
         long result=db.insert(newtableName,null,contentValues);
         if(result==-1)
             return false;
         else
             return true;
     }
-    public String fetch_data(String sender_Name)
+    public Cursor fetch_data(String sender_Name)
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String query="Select * from "+sender_Name+"";
+        String query="Select * from "+newtableName+"";
         Cursor cursor=db.rawQuery(query,null);
-        return "karan";
+        return cursor;
 
     }
 
