@@ -52,6 +52,7 @@ public class LogInManager extends AppCompatActivity {
             Intent verifyOtp=new Intent(this, OtpVerification.class);
             verifyOtp.putExtra(Config.PHONE_NUMBER,"+91"+phoneNumberString);
             startActivity(verifyOtp);
+            finish();
         }
     }
 }

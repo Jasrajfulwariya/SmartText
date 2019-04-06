@@ -64,6 +64,7 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
                 signInWithPhoneAuthCredential(phoneAuthCredential);
                 Intent I1=new Intent(OtpVerification.this, MainActivity.class);
                 startActivity(I1);
+                finish();
             }
             @Override
             public void onVerificationFailed(FirebaseException e) {
@@ -133,9 +134,10 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
         mResendB=findViewById(R.id.otpResend);
     }
 
-    public void OtptoLogin(View view) {
+    public void otpToLogin(View view) {
         Intent I1=new Intent(this,MainActivity.class);
         startActivity(I1);
+        finish();
     }
 
 
@@ -147,15 +149,13 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = task.getResult().getUser();
-                            Intent LoggedIn = new Intent(OtpVerification.this,MainActivity.class);
-                            startActivity(LoggedIn);
+                            Intent loggedIn = new Intent(OtpVerification.this,MainActivity.class);
+                            startActivity(loggedIn);
                             finish();
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
-
                             Toast.makeText(OtpVerification.this,"error",Toast.LENGTH_LONG).show();
-
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
                             }

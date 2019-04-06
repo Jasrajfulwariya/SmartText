@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "741244288048",
+    "firebase_url": "https://smarttext-212be.firebaseio.com",
+    "project_id": "smarttext-212be",
+    "storage_bucket": "smarttext-212be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741244288048:android:3c8b396756099f37",
+        "android_client_info": {
+          "package_name": "com.example.smarttext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741244288048-c05c9862s8q0o5bnsbeajk0chi751se3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smarttext",
+            "certificate_hash": "8c8ef7e5c2d2242a96687f60a958228b3d160966"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDREd6VAjAedTtlbCO52EBSyQ3zdj2cd9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741244288048-nfbb6f9lspcebj1afd7nri4tog7h2bm3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
