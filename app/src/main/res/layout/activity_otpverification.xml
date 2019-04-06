@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <Button
+        android:layout_margin="4dp"
+        android:id="@+id/otpBack"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/ic_close_black_24dp"
+        android:onClick="OtptoLogin"
+        android:textColor="#000000"
+        tools:ignore="OnClick" />
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_below="@id/otpBack"
+        android:id="@+id/otpEdit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"/>
+
+    <ProgressBar
+        android:layout_marginTop="8dp"
+        android:id="@+id/otpProgressBar"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="50dp"
+        android:layout_below="@id/otpEdit" />
+
+    <TextView
+        android:layout_below="@id/otpEdit"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/otpResend"
+        android:textSize="16sp"
+        android:id="@+id/otpTimer"
+        android:text="60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"/>
+
+    <Button
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="52dp"
+        android:layout_below="@id/otpProgressBar"
+        android:textAllCaps="false"
+        android:id="@+id/otpConform"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        android:background="@drawable/logintext"
+        android:text="Conform"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/otpResend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/otpProgressBar"
+        android:layout_below="@id/otpEdit"
+        android:text="resend"
+        android:textColor="#d9d9d9"
+        android:textStyle="bold" />
+</android.widget.RelativeLayout>

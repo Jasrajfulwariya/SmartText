@@ -41,7 +41,7 @@ public class ActiveListRecyclerAdapter extends RecyclerView.Adapter<ActiveListRe
     }
 
 
-    class ViewHolderSetActiveList extends RecyclerView.ViewHolder
+    public class ViewHolderSetActiveList extends RecyclerView.ViewHolder
     {
         View mainView;
         CircleImageView profilePic;
