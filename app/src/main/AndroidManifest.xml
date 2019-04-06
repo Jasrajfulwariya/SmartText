@@ -12,15 +12,17 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogInActivity.CallLayout"></activity>
+        <activity android:name=".Sample"></activity>
+        <activity android:name=".LogInActivity.CallLayout" />
         <activity android:name=".LogInActivity.OtpVerification" />
         <activity android:name=".LogInActivity.LogInManager" />
         <activity android:name=".ContactsActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".CallActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
