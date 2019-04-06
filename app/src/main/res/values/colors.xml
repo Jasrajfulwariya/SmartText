@@ -12,4 +12,6 @@
     <color name="colorDarkGreen">#90016B05</color>
     <color name="black">#000000</color>
     <color name="transparent">#50000000</color>
+    <color name="mediumBlue">#3898C1</color>
+    <color name="GREY">#D9D9D9</color>
 </resources>
