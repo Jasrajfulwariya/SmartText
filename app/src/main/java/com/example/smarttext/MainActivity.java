@@ -13,7 +13,6 @@ import android.view.ViewAnimationUtils;
 import com.example.smarttext.Adapters.MainChatRecyclerAdapter;
 import com.example.smarttext.LogInActivity.LogInManager;
 import com.google.firebase.auth.FirebaseAuth;
-
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
