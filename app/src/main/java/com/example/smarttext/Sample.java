@@ -15,6 +15,7 @@ public class Sample extends AppCompatActivity {
     EditText mSample;
     Button mSampleButton;
     SquliteDatabase squlite;
+    SquliteContactinfo contact_squlite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,7 @@ public class Sample extends AppCompatActivity {
         mSample=findViewById(R.id.Samplemesage);
         mSampleButton=findViewById(R.id.SampleButton);
         squlite=new SquliteDatabase(this,"Amit");
+        contact_squlite=new SquliteContactinfo(this);
     }
 
     public void fun_1(View view) {
@@ -49,5 +51,22 @@ public class Sample extends AppCompatActivity {
         builder.show();
     }
 
+    public void fun_3(View view) {
+        boolean r1= contact_squlite.insert_contact("Karan","8950845757","@123");
+
+    }
+
+    public void fun_4(View view) {
+        Cursor cs=contact_squlite.fetch_data("Jasraj");
+        StringBuffer buffer=new StringBuffer();
+        while (cs.moveToNext())
+        {
+            buffer.append("Id"+cs.getString(0));
+            buffer.append("Id"+cs.getString(1)+"\n");
+
+        }
+        showmesages("data",buffer.toString());
+
+    }
 }
 
