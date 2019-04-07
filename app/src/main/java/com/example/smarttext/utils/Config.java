@@ -6,4 +6,5 @@ public final class Config {
     public static final String PHONE_NUMBER="phone_number";
     public static final String NODE_ALL_CONTACT ="AllUser" ;
     public static final String NODE_PHONE_NO = "PhoneNo";
+    public static final String Node_ACTIVE_NOW ="ActiveNow" ;
 }

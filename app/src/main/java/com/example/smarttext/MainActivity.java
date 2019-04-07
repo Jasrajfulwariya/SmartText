@@ -1,5 +1,4 @@
 package com.example.smarttext;
-
 import android.animation.Animator;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
@@ -12,9 +11,10 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import com.example.smarttext.Adapters.MainChatRecyclerAdapter;
 import com.example.smarttext.LogInActivity.LogInManager;
+import com.example.smarttext.utils.FireBaseDatabaseManager;
 import com.google.firebase.auth.FirebaseAuth;
-
 public class MainActivity extends AppCompatActivity {
+    private FireBaseDatabaseManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void init()
     {
-
+        manager=new FireBaseDatabaseManager();
     }
     public void recyclerSetup()
     {
@@ -119,5 +119,29 @@ public class MainActivity extends AppCompatActivity {
             startActivity(goToLogin);
             finish();
         }
+        else
+            manager.sandActiveNow();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+            manager.sandNotActive();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+        manager.sandActiveNow();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+        manager.sandNotActive();
+    }
+
 }

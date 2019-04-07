@@ -31,11 +31,9 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
     TextView mOtpTimer;
     TextView mResendB;
     String phoneVerify;
+    EditText mCodeText;
     private String mVerificationId;
     int otpFlag =0;
-    private EditText phoneText,phoneText1,codeText;
-    private LinearLayout phoneLayout,codeLayout;
-    private ProgressBar phoneBar,codeBar;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBacks;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth;
@@ -76,8 +74,6 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
                                    PhoneAuthProvider.ForceResendingToken token) {
                 mVerificationId = verificationId;
                 mResendToken = token;
-                phoneLayout.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.VISIBLE);
             }
 
         };
@@ -128,7 +124,7 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
     }
     private void init()
     {
-       // otpLoading=(ProgressBar)findViewById(R.id.otpProgressBar);
+        mCodeText=findViewById(R.id.otpEdit);
         mOtpTimer=findViewById(R.id.otpTimer);
         mResendB=findViewById(R.id.otpResend);
     }
@@ -148,7 +144,6 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = task.getResult().getUser();
                             Intent loggedIn = new Intent(OtpVerification.this,MainActivity.class);
                             startActivity(loggedIn);
                             finish();
@@ -162,5 +157,11 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void confirmCode(View view) {
+        String code=mCodeText.getText().toString();
+        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(mVerificationId,code);
+        signInWithPhoneAuthCredential(credential);
     }
 }

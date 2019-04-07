@@ -27,7 +27,7 @@ public class ContactsActivity extends AppCompatActivity {
         if (!Permission.checkPermissionForContact(this))
         {
             init();
-            //TODO: getting Contact Data From Sqlite if Found Sync if Not Found Getting From FireBase
+            //TODO: getting Contact Data
             contactData=getContactList();
             ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,contactData);
             contactRecycler.setAdapter(contactAdapter);
