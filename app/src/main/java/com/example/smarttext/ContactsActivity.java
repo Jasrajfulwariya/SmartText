@@ -27,7 +27,7 @@ public class ContactsActivity extends AppCompatActivity {
         if (!Permission.checkPermissionForContact(this))
         {
             init();
-            //TODO: getting Contact Data From Sqlite if Found Sync if Not Found Getting From FireBase
+            //TODO: getting Contact Data
             contactData=getContactList();
             ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,contactData);
             contactRecycler.setAdapter(contactAdapter);
@@ -58,16 +58,25 @@ public class ContactsActivity extends AppCompatActivity {
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                             new String[]{id}, null);
-                    while (pCur!=null&&pCur.moveToNext()) {
-                        String phoneNo = (pCur.getString(pCur.getColumnIndex(
+                    if(pCur!=null&&pCur.moveToNext())
+                    {
+                        String localData=(pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER))).replaceAll("\\s+", "");
-                        if(phoneNo.charAt(0)=='0')
-                        {
-                            phoneNo=replace(phoneNo);
+                        if(localData.charAt(0)=='0')
+                            localData=replace(localData);
+                        if (localData.charAt(0)!='+')
+                            localData="+91"+localData;
+                        data.add(new ContactData(name,localData));
+                        while (pCur.moveToNext()) {
+                            String phoneNo = (pCur.getString(pCur.getColumnIndex(
+                                    ContactsContract.CommonDataKinds.Phone.NUMBER))).replaceAll("\\s+", "");
+                            if(phoneNo.charAt(0)=='0')
+                                phoneNo=replace(phoneNo);
+                            if (phoneNo.charAt(0)!='+')
+                                phoneNo="+91"+phoneNo;
+                            if(!(localData.equals(phoneNo)))
+                                data.add(new ContactData(name,phoneNo));
                         }
-                        if (phoneNo.charAt(0)!='+')
-                            phoneNo="+91"+phoneNo;
-                        data.add(new ContactData(name,phoneNo));
                     }
                     pCur.close();
                 }
