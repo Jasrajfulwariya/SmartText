@@ -10,67 +10,82 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.example.smarttext.Adapters.ContactListRecyclerAdapter;
 import com.example.smarttext.utils.ContactData;
-import com.example.smarttext.utils.FireBaseDatabaseManager;
 import com.example.smarttext.utils.Permission;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 public class ContactsActivity extends AppCompatActivity {
-    private FireBaseDatabaseManager fireDataManager;
+    private DatabaseReference fireBaseRef;
+    private RecyclerView contactRecycler;
+    private ArrayList<ContactData> contactData;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         Permission.getContactReqPermission(this);
         if (!Permission.checkPermissionForContact(this))
         {
             init();
-            ArrayList<ContactData> contactData=getContactData();
-            contactData= filterContact(contactData);
-            RecyclerView contactRecycler=findViewById(R.id.activityContactRecyclerView);
-            contactRecycler.setAdapter(new ContactListRecyclerAdapter(getApplicationContext(),contactData));
-            contactRecycler.setHasFixedSize(true);
+            //TODO: getting Contact Data From Sqlite if Found Sync if Not Found Getting From FireBase
+            contactData=getContactList();
+            ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,contactData);
+            contactRecycler.setAdapter(contactAdapter);
             contactRecycler.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 
     private void init() {
-        fireDataManager=new FireBaseDatabaseManager();
+        fireBaseRef=FirebaseDatabase.getInstance().getReference();
+        contactRecycler=findViewById(R.id.activityContactRecyclerView);
     }
+    private ArrayList<ContactData> getContactList() {
+        ArrayList<ContactData> data=new ArrayList<>();
+        ContentResolver cr = getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                null, null, null, null);
 
-    private ArrayList<ContactData> filterContact(ArrayList<ContactData> contactData) {
-            for(int i=0;i<contactData.size();i++)
-            {
-                if(fireDataManager.checkContactPresent(contactData.get(i).getPhoneNo()))
-                {
-                    contactData.remove(i);
+        if ((cur != null ? cur.getCount() : 0) > 0) {
+            while (cur.moveToNext()) {
+                String id = cur.getString(
+                        cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(
+                        ContactsContract.Contacts.DISPLAY_NAME));
+                if (cur.getInt(cur.getColumnIndex(
+                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
+                    Cursor pCur = cr.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{id}, null);
+                    while (pCur!=null&&pCur.moveToNext()) {
+                        String phoneNo = (pCur.getString(pCur.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER))).replaceAll("\\s+", "");
+                        if(phoneNo.charAt(0)=='0')
+                        {
+                            phoneNo=replace(phoneNo);
+                        }
+                        if (phoneNo.charAt(0)!='+')
+                            phoneNo="+91"+phoneNo;
+                        data.add(new ContactData(name,phoneNo));
+                    }
+                    pCur.close();
                 }
             }
-            return contactData;
+        }
+        if(cur!=null){
+            cur.close();
+        }
+        return  data;
     }
 
-    public ArrayList<ContactData> getContactData()
-    {
-        ContentResolver resolver=getContentResolver();
-        ArrayList<ContactData> list=new ArrayList<>();
-        Cursor cursor=resolver.query(ContactsContract
-                .Contacts.CONTENT_URI
-                ,null,null,null,null);
-        while (cursor.moveToNext())
+    private String replace(String phoneNo) {
+        String result="";
+        for(int i=1;i<=10;i++)
         {
-            String id=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-            String name=cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-            Cursor phoneCursor=resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null
-            ,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[] {id}
-            ,null);
-            phoneCursor.moveToNext();
-            String phoneNumber=phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            if(phoneNumber.charAt(0)!='+')
-            phoneNumber="+91"+phoneNumber;
-            list.add(new ContactData(name,phoneNumber));
+            result=result+phoneNo.charAt(i);
         }
-        return list;
+        return result;
     }
 
 }

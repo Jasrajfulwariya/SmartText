@@ -23,6 +23,7 @@ public class MainChatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public int getItemViewType(int position) {
         return position;
+        //Return LiveData.rec/sand
     }
 
     @NonNull
