@@ -2,7 +2,6 @@ package com.example.smarttext;
 
 import android.animation.Animator;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,8 +13,6 @@ import android.view.ViewAnimationUtils;
 import com.example.smarttext.Adapters.MainChatRecyclerAdapter;
 import com.example.smarttext.LogInActivity.LogInManager;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -121,24 +118,6 @@ public class MainActivity extends AppCompatActivity {
             Intent goToLogin =new Intent(MainActivity.this, LogInManager.class);
             startActivity(goToLogin);
             finish();
-        }
-    }
-    //Fetching Contact First Time
-    public class syncContactBackground extends AsyncTask<ArrayList<String>,Void,ArrayList<String>>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected ArrayList<String> doInBackground(ArrayList<String>... arrayLists) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<String> strings) {
-            super.onPostExecute(strings);
         }
     }
 }

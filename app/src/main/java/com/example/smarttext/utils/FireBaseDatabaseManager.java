@@ -32,17 +32,7 @@ public class FireBaseDatabaseManager {
     public boolean checkContactPresent(String phoneNumber)
     {
         final boolean[] result = new boolean[1];
-        fireBaseRef.child(Config.NODE_ALL_CONTACT).orderByChild(phoneNumber).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String jas=(String) dataSnapshot.getValue();
-                result[0] = dataSnapshot.exists();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
         return result[0];
     }
 }

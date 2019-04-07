@@ -15,14 +15,14 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainChat"></activity>
         <activity android:name=".LogInActivity.CallLayout" />
         <activity android:name=".LogInActivity.OtpVerification" />
         <activity android:name=".LogInActivity.LogInManager" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".CallActivity" />
-        <activity android:name=".Sample">
+        <activity android:name=".Sample"/>
         <activity android:name=".ContactsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
