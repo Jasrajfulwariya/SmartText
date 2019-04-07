@@ -25,5 +25,21 @@
         android:onClick="fun_2"
         android:layout_below="@id/SampleButton"
         tools:ignore="OnClick" />
+    <Button
+        android:id="@+id/SampleButton2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="press"
+        android:onClick="fun_3"
+        android:layout_below="@id/SampleButton1"
+        tools:ignore="OnClick" />
+    <Button
+        android:id="@+id/SampleButton3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="press"
+        android:onClick="fun_4"
+        android:layout_below="@id/SampleButton2"
+        tools:ignore="OnClick" />
 
 </android.widget.RelativeLayout>
