@@ -1,5 +1,6 @@
 package com.example.smarttext;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.ContactsContract;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.smarttext.Adapters.ContactListRecyclerAdapter;
 import com.example.smarttext.utils.Config;
@@ -26,7 +28,9 @@ public class ContactsActivity extends AppCompatActivity {
     private DatabaseReference fireBaseRef;
     private RecyclerView contactRecycler;
     ArrayList<ContactData> data;
+    SquliteContactinfo msquilecontact;
     private ArrayList<ContactData> contactData;
+    ArrayList<ContactData> newcontactData;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -38,9 +42,26 @@ public class ContactsActivity extends AppCompatActivity {
             init();
             //TODO: getting Contact Data
             contactData=getContactList();
+            newcontactData=new ArrayList<>();
             int a=contactData.size();
             //FilterData
-            final int i=0;
+            int i=0;
+            msquilecontact=new SquliteContactinfo(this);
+            for(i=0;i<contactData.size();i++)
+            {
+                    msquilecontact.insert_contact(contactData.get(i).getName()
+                            ,contactData.get(i).getPhoneNo(),contactData.get(i).getImageUrl());
+            }
+            Cursor res=msquilecontact.fetch_data("k");
+            StringBuffer result =new StringBuffer();
+            while ((res.moveToNext()))
+            {
+                result.append(res.getString(0));
+                //newcontactData.add(res.getString(0),res.getString(1),1);
+              newcontactData.add(new ContactData(res.getString(0),res.getString(1)));
+         }
+
+         // Toast.makeText(ContactsActivity.this,result,Toast.LENGTH_LONG).show();
             data=new ArrayList<>();
             for(ContactData conData:contactData)
             {
@@ -74,7 +95,7 @@ public class ContactsActivity extends AppCompatActivity {
                     }
                 });
             };
-            ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,contactData);
+            ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,newcontactData);
             contactRecycler.setAdapter(contactAdapter);
             contactRecycler.setLayoutManager(new LinearLayoutManager(this));
         }
@@ -86,11 +107,14 @@ public class ContactsActivity extends AppCompatActivity {
         fireBaseRef=FirebaseDatabase.getInstance().getReference();
         contactRecycler=findViewById(R.id.activityContactRecyclerView);
     }
+
     private ArrayList<ContactData> getContactList() {
         ArrayList<ContactData> data=new ArrayList<>();
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
+
+        Toast.makeText(ContactsActivity.this,cur.toString(),Toast.LENGTH_LONG).show();
 
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur.moveToNext()) {
@@ -136,7 +160,11 @@ public class ContactsActivity extends AppCompatActivity {
                                 data.add(new ContactData(name,phoneNo));
                             }
                             }
-                        }
+
+
+                    }
+
+
                     pCur.close();
                 }
             }

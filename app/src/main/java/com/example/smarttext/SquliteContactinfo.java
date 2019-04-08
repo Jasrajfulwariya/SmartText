@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class SquliteContactinfo extends SQLiteOpenHelper {
-    private static final String contact_Databasename="contact_Database.db";
+    private static final String contact_Databasename="contact_Database1.db";
     private static final String mcontact_table="contact_table";
     public SquliteContactinfo(Context context) {
         super(context, contact_Databasename,null, 1);
@@ -23,7 +23,7 @@ public class SquliteContactinfo extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public boolean insert_contact(String name,String contact,String image_url)
+    public boolean insert_contact(String name,String contact,int image_url)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();

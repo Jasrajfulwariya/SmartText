@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.smarttext.ContactsActivity;
 import com.example.smarttext.R;
 import com.example.smarttext.utils.Config;
 import com.example.smarttext.utils.ContactData;
@@ -30,7 +32,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     public ContactListRecyclerAdapter(Context mContext,ArrayList<ContactData>data) {
         this.mContext=mContext;
         this.data=data;
-    }
+       }
     @NonNull
     @Override
 

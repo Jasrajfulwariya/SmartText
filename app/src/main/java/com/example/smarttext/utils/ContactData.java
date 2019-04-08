@@ -5,7 +5,7 @@ public class ContactData {
     private String phone_no;
     private int ImageUrl;
 
-    public ContactData(String name, String phone_no) {
+    public ContactData(String name, String phone_no ) {
         this.name = name;
         this.phone_no = phone_no;
     }
