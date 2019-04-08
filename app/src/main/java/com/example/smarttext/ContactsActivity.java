@@ -38,6 +38,7 @@ public class ContactsActivity extends AppCompatActivity {
             init();
             //TODO: getting Contact Data
             contactData=getContactList();
+            int a=contactData.size();
             //FilterData
             final int i=0;
             data=new ArrayList<>();
