@@ -107,13 +107,16 @@ public class ContactsActivity extends AppCompatActivity {
                             new String[]{id}, null);
                     if(pCur!=null&&pCur.moveToNext())
                     {
-                        String localData=(pCur.getString(pCur.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER))).replaceAll("\\s+", "");
-                        if(localData.charAt(0)=='0')
-                            localData=replace(localData);
-                        if (localData.charAt(0)!='+')
-                            localData="+91"+localData;
-                        data.add(new ContactData(name,localData));
+                        ArrayList<String> local=new ArrayList<>();
+                        String local1=(pCur.getString(pCur.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER)))
+                                .replaceAll("\\s+", "");
+                        if(local1.charAt(0)=='0')
+                            local1=replace(local1);
+                        if (local1.charAt(0)!='+')
+                            local1="+91"+local1;
+                        local.add(local1);
+                        data.add(new ContactData(name,local1));
                         while (pCur.moveToNext()) {
                             String phoneNo = (pCur.getString(pCur.getColumnIndex(
                                     ContactsContract.CommonDataKinds.Phone.NUMBER))).replaceAll("\\s+", "");
@@ -121,10 +124,19 @@ public class ContactsActivity extends AppCompatActivity {
                                 phoneNo=replace(phoneNo);
                             if (phoneNo.charAt(0)!='+')
                                 phoneNo="+91"+phoneNo;
-                            if(!(localData.equals(phoneNo)))
+                            int j=0;
+                                for (int i=0;i<local.size();i++)
+                                {
+                                 if(!(local.get(i).equals(phoneNo)))
+                                     j++;
+                                }
+                            if(j==local.size())
+                            {
+                                local.add(phoneNo);
                                 data.add(new ContactData(name,phoneNo));
+                            }
+                            }
                         }
-                    }
                     pCur.close();
                 }
             }
