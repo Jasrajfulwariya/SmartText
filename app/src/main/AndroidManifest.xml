@@ -21,9 +21,8 @@
         <activity android:name=".LogInActivity.LogInManager" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".CallActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Sample"/>
-        <activity android:name=".ContactsActivity" >
+        <activity android:name=".ContactsActivity" />
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
