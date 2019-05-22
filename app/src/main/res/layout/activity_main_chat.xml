@@ -2,8 +2,87 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
-
+    <RelativeLayout
+        android:id="@+id/subChatToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+        <ImageView
+            android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/subChatBackArrow"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <ImageView
+            android:id="@+id/subChatMakeCall"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_videocam_black_24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:background="@drawable/user"
+            android:id="@+id/subChatProfilePic"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/subChatBackArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/subChatProfilePic"
+            android:text="Karan Kapoor"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:padding="10dp"
+        android:layout_above="@+id/subChatBottomToolBar"
+        android:id="@+id/subChatRecView"
+        android:layout_below="@id/subChatToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/subChatBottomToolBar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <EditText
+            android:padding="10sp"
+            android:background="@color/white"
+            android:hint="@string/type_a_message"
+            android:id="@+id/subChatMessageSendBox"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:layout_weight=".3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:layout_margin="5dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/subChatMessageSendBt"
+                android:background="@drawable/ic_send_blue_24dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+            <ImageButton
+                android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/subChatMessageSendBt"
+                android:id="@+id/subChatGallary"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_gallaty_24dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

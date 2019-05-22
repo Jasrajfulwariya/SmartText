@@ -21,7 +21,6 @@
             android:id="@+id/receiver_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="karan"
             android:textColor="#FFFFFF" />
     </RelativeLayout>
