@@ -1,23 +1,36 @@
 package com.example.smarttext;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.example.smarttext.Adapters.ContactListRecyclerAdapter;
+import com.example.smarttext.utils.Config;
 import com.example.smarttext.utils.ContactData;
 import com.example.smarttext.utils.Permission;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 public class ContactsActivity extends AppCompatActivity {
     private DatabaseReference fireBaseRef;
     private RecyclerView contactRecycler;
+    ArrayList<ContactData> data;
+    SquliteContactinfo msquilecontact;
     private ArrayList<ContactData> contactData;
+    ArrayList<ContactData> newcontactData;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -29,21 +42,79 @@ public class ContactsActivity extends AppCompatActivity {
             init();
             //TODO: getting Contact Data
             contactData=getContactList();
-            ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,contactData);
+            newcontactData=new ArrayList<>();
+            int a=contactData.size();
+            //FilterData
+            int i=0;
+            msquilecontact=new SquliteContactinfo(this);
+            for(i=0;i<contactData.size();i++)
+            {
+                    msquilecontact.insert_contact(contactData.get(i).getName()
+                            ,contactData.get(i).getPhoneNo(),contactData.get(i).getImageUrl());
+            }
+            Cursor res=msquilecontact.fetch_data("k");
+            StringBuffer result =new StringBuffer();
+            while ((res.moveToNext()))
+            {
+                result.append(res.getString(0));
+                //newcontactData.add(res.getString(0),res.getString(1),1);
+              newcontactData.add(new ContactData(res.getString(0),res.getString(1)));
+         }
+
+         // Toast.makeText(ContactsActivity.this,result,Toast.LENGTH_LONG).show();
+            data=new ArrayList<>();
+            for(ContactData conData:contactData)
+            {
+                final  ContactData data1=conData;
+                DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
+                reference.child(Config.NODE_ALL_CONTACT).orderByChild(Config.NODE_PHONE_NO)
+                        .equalTo(data1.getPhoneNo()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    int i=0;
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d("Data", i+" :"+data1.getPhoneNo());
+                        i++;
+                        if(dataSnapshot.exists())
+                        {
+                            //TODO: starting Chat Activity
+                            data.add(data1);
+                            Log.d("Posion Of data", "onDataChange: exists");
+                            String dd=data.get(0).getPhoneNo();
+                            dd="5";
+                        }
+                        else
+                        {
+                            //TODO: Starting Invite Activity
+                            Log.d("Posion Of data ", "onDataChange: not exist");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            };
+            ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,newcontactData);
             contactRecycler.setAdapter(contactAdapter);
             contactRecycler.setLayoutManager(new LinearLayoutManager(this));
         }
+
+
     }
 
     private void init() {
         fireBaseRef=FirebaseDatabase.getInstance().getReference();
         contactRecycler=findViewById(R.id.activityContactRecyclerView);
     }
+
     private ArrayList<ContactData> getContactList() {
         ArrayList<ContactData> data=new ArrayList<>();
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
+
+        Toast.makeText(ContactsActivity.this,cur.toString(),Toast.LENGTH_LONG).show();
 
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur.moveToNext()) {
@@ -60,13 +131,16 @@ public class ContactsActivity extends AppCompatActivity {
                             new String[]{id}, null);
                     if(pCur!=null&&pCur.moveToNext())
                     {
-                        String localData=(pCur.getString(pCur.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER))).replaceAll("\\s+", "");
-                        if(localData.charAt(0)=='0')
-                            localData=replace(localData);
-                        if (localData.charAt(0)!='+')
-                            localData="+91"+localData;
-                        data.add(new ContactData(name,localData));
+                        ArrayList<String> local=new ArrayList<>();
+                        String local1=(pCur.getString(pCur.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER)))
+                                .replaceAll("\\s+", "");
+                        if(local1.charAt(0)=='0')
+                            local1=replace(local1);
+                        if (local1.charAt(0)!='+')
+                            local1="+91"+local1;
+                        local.add(local1);
+                        data.add(new ContactData(name,local1));
                         while (pCur.moveToNext()) {
                             String phoneNo = (pCur.getString(pCur.getColumnIndex(
                                     ContactsContract.CommonDataKinds.Phone.NUMBER))).replaceAll("\\s+", "");
@@ -74,10 +148,23 @@ public class ContactsActivity extends AppCompatActivity {
                                 phoneNo=replace(phoneNo);
                             if (phoneNo.charAt(0)!='+')
                                 phoneNo="+91"+phoneNo;
-                            if(!(localData.equals(phoneNo)))
+                            int j=0;
+                                for (int i=0;i<local.size();i++)
+                                {
+                                 if(!(local.get(i).equals(phoneNo)))
+                                     j++;
+                                }
+                            if(j==local.size())
+                            {
+                                local.add(phoneNo);
                                 data.add(new ContactData(name,phoneNo));
-                        }
+                            }
+                            }
+
+
                     }
+
+
                     pCur.close();
                 }
             }
