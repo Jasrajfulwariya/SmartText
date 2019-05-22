@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.smarttext.MainActivity;
+import com.example.smarttext.MainChat;
 import com.example.smarttext.R;
 import com.example.smarttext.utils.Config;
 import com.example.smarttext.utils.ContactData;
@@ -70,7 +72,6 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             rootLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO 01: Click On Contact List
                     DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
                     reference.child(Config.NODE_ALL_CONTACT).orderByChild(Config.NODE_PHONE_NO)
                             .equalTo(data.get(i).getPhoneNo()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,8 +79,10 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.exists())
                             {
-                                //TODO: starting Chat Activity
-                                Log.d("Posion Of data", "onDataChange: exists");
+                                Intent inte=new Intent(mContext, MainChat.class);
+                                inte.putExtra(Config.PHONE_NUMBER,data.get(i).getPhoneNo());
+                                inte.putExtra(Config.USER_NAME,data.get(i).getName());
+                                mContext.startActivity(inte);
                             }
                             else
                             {

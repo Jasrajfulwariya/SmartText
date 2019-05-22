@@ -13,4 +13,6 @@ public final class Config {
     public static final int ALL_PERMISSION_VERIFY_CODE=1;
     public static final String NODE_STORAGE_PROFILE_PIC ="ProfilePic" ;
     public static final int REQ_CODE_GET_PROFILE_IMAGE =10;
+    public static final String USER_NAME ="SanderName" ;
+    public static final String NODE_ALL_USER_CHAT="AllUserChat";
 }

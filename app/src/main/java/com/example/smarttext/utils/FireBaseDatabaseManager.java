@@ -20,17 +20,6 @@ public class FireBaseDatabaseManager {
         databaseRef = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void doChat(String number,LiveChatData chatData)
-    {
-        databaseRef.child(Config.NODE_CHAT).child(myPhoneNumber).child(number).setValue(chatData);
-        databaseRef.child(Config.NODE_CHAT).child(number).child(myPhoneNumber).setValue(chatData);
-    }
-    public boolean checkContactPresent(String phoneNumber)
-    {
-        final boolean[] result = new boolean[1];
-
-        return result[0];
-    }
     public void sandNotActive() {
         Calendar calendar=Calendar.getInstance();
         ActiveNow activeNow=new ActiveNow();

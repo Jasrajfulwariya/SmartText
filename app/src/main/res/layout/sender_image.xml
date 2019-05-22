@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
         <com.jgabrielfreitas.core.BlurImageView
             android:layout_alignParentEnd="true"
-            android:id="@+id/subChatRecViewSendImage"
+            android:id="@+id/subChatSendImage"
             android:layout_margin="20dp"
             android:layout_width="300dp"
             android:layout_height="300dp"

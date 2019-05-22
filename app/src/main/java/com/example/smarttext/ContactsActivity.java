@@ -1,15 +1,23 @@
 package com.example.smarttext;
+import android.Manifest;
 import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.smarttext.Adapters.ContactListRecyclerAdapter;
 import com.example.smarttext.utils.Config;
@@ -24,46 +32,46 @@ import java.util.ArrayList;
 public class ContactsActivity extends AppCompatActivity {
     private DatabaseReference fireBaseRef;
     private RecyclerView contactRecycler;
-    ArrayList<ContactData> data;
     private ArrayList<ContactData> contactData;
+    private ArrayList<ContactData> previousData;
+    private EditText searchText;
+    ImageButton imgsearch;
+    String searchedContact;
+    private ContactListRecyclerAdapter contactAdapter;
+    String mName;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        searchText=findViewById(R.id.contact_search);
+        imgsearch=findViewById(R.id.contactSearchIB);
+
             init();
-            //TODO: getting Contact Data
-            contactData=getContactList();
-            //FilterData
-            final int i=0;
-            data=new ArrayList<>();
-            for(ContactData conData:contactData)
+                contactData=getContactList();
+                previousData=contactData;
+                contactAdapter=new ContactListRecyclerAdapter(this,contactData);
+                contactRecycler.setAdapter(contactAdapter);
+                contactRecycler.setLayoutManager(new LinearLayoutManager(this));
+                contactData=new ArrayList<>();
+    }
+
+    private boolean cheakEqual(String mName) {
+        char a=searchedContact.charAt(0);
+        for(int i=0;i<mName.length();i++)
+        {
+            if(mName.charAt(i)==a)
             {
-                final  ContactData data1=conData;
-                DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
-                reference.child(Config.NODE_ALL_CONTACT).orderByChild(Config.NODE_PHONE_NO)
-                        .equalTo(data1.getPhoneNo()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    int i=0;
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.d("Data", i+" :"+data1.getPhoneNo());
-                        i++;
-                        if(dataSnapshot.exists())
-                        {
-                            data.add(data1);
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            };
-            ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,contactData);
-            contactRecycler.setAdapter(contactAdapter);
-            contactRecycler.setLayoutManager(new LinearLayoutManager(this));
+                int count=0,j;
+                for(j=0;j<searchedContact.length();j++) {
+                    if (mName.charAt(i+j)!= searchedContact.charAt(j))
+                        break;
+                }
+                if(j==searchedContact.length())
+                    return true;
+            }
+        }
+        return false;
     }
 
     private void init() {
@@ -130,7 +138,6 @@ public class ContactsActivity extends AppCompatActivity {
         }
         return  data;
     }
-
     private String replace(String phoneNo) {
         String result="";
         for(int i=1;i<=10;i++)
@@ -140,4 +147,15 @@ public class ContactsActivity extends AppCompatActivity {
         return result;
     }
 
+    public void searchContact(View view) {
+        searchedContact=searchText.getText().toString();
+        for (ContactData data:previousData) {
+            mName = data.getName();
+            if (cheakEqual(mName))
+                contactData.add(data);
+        }
+        contactAdapter=new ContactListRecyclerAdapter(getApplicationContext(),contactData);
+        contactRecycler.setAdapter(contactAdapter);
+        contactRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    }
 }

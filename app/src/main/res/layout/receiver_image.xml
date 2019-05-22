@@ -15,7 +15,7 @@
             android:src="@drawable/user"
             android:background="@drawable/chat_image_background"/>
         <ImageButton
-            android:id="@+id/subChatRecViewDownload"
+            android:id="@+id/subChatDownloadButton"
             android:src="@drawable/ic_file_download_blue_24dp"
             android:background="@drawable/background_rounded_download_image"
             android:layout_centerInParent="true"

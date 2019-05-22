@@ -18,7 +18,7 @@
             android:paddingEnd="12dp"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
-            android:id="@+id/receiver_message"
+            android:id="@+id/subChatSendMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="karan"

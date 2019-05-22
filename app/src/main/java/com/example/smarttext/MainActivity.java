@@ -1,6 +1,7 @@
 package com.example.smarttext;
 import android.animation.Animator;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +12,10 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import com.example.smarttext.Adapters.MainChatRecyclerAdapter;
 import com.example.smarttext.LogInActivity.LogInManager;
+import com.example.smarttext.utils.Config;
 import com.example.smarttext.utils.ContactData;
 import com.example.smarttext.utils.FireBaseDatabaseManager;
+import com.example.smarttext.utils.Permission;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        ActivityCompat.requestPermissions(this, Permission.ALL_PERMISSION_ARRAY, Config.ALL_PERMISSION_VERIFY_CODE);
         recyclerSetup();
       //  ArrayList<ContactData>myAllContacts=new ArrayList<>();
       //  myAllContacts=contactinfo.fetchData();

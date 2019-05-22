@@ -4,13 +4,8 @@ import java.util.ArrayList;
 
 public class LiveChatData {
     private int sedRec;
-    private ArrayList<String> data;
-    private ArrayList<String> time;
-    private String sandingTime;
-    public LiveChatData() {
-        data=new ArrayList<>();
-        time=new ArrayList<>();
-    }
+    private String data;
+    private String time;
 
     public int getSedRec() {
         return sedRec;
@@ -20,37 +15,29 @@ public class LiveChatData {
         this.sedRec = sedRec;
     }
 
-    public ArrayList<String> getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(ArrayList<String> data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public ArrayList<String> getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(ArrayList<String> time) {
+    public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getSandingTime() {
-        return sandingTime;
-    }
-
-    public void setSandingTime(String sandingTime) {
-        this.sandingTime = sandingTime;
     }
 
     @Override
     public String toString() {
         return "LiveChatData{" +
                 "sedRec=" + sedRec +
-                ", data=" + data +
-                ", time=" + time +
-                ", sandingTime='" + sandingTime + '\'' +
+                ", data='" + data + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 }
+
