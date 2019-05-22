@@ -13,12 +13,15 @@ import com.example.smarttext.Adapters.MainChatRecyclerAdapter;
 import com.example.smarttext.LogInActivity.LogInManager;
 import com.example.smarttext.utils.FireBaseDatabaseManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
     private FireBaseDatabaseManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
         recyclerSetup();
     }
     public void init()
@@ -113,13 +116,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+
+
         if(FirebaseAuth.getInstance().getCurrentUser()==null)
         {
             Intent goToLogin =new Intent(MainActivity.this, LogInManager.class);
             startActivity(goToLogin);
             finish();
+
         }
-        else
+        else;
             manager.sandActiveNow();
     }
 
