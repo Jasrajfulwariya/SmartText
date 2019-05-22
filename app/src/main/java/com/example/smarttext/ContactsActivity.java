@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 public class ContactsActivity extends AppCompatActivity {
     private DatabaseReference fireBaseRef;
@@ -32,9 +31,6 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
-        Permission.getContactReqPermission(this);
-        if (!Permission.checkPermissionForContact(this))
-        {
             init();
             //TODO: getting Contact Data
             contactData=getContactList();
@@ -54,16 +50,8 @@ public class ContactsActivity extends AppCompatActivity {
                         i++;
                         if(dataSnapshot.exists())
                         {
-                            //TODO: starting Chat Activity
                             data.add(data1);
-                            Log.d("Posion Of data", "onDataChange: exists");
-                            String dd=data.get(0).getPhoneNo();
-                            dd="5";
-                        }
-                        else
-                        {
-                            //TODO: Starting Invite Activity
-                            Log.d("Posion Of data ", "onDataChange: not exist");
+
                         }
                     }
 
@@ -76,9 +64,6 @@ public class ContactsActivity extends AppCompatActivity {
             ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,contactData);
             contactRecycler.setAdapter(contactAdapter);
             contactRecycler.setLayoutManager(new LinearLayoutManager(this));
-        }
-
-
     }
 
     private void init() {

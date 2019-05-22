@@ -3,11 +3,17 @@ package com.example.smarttext.utils;
 public class ContactData {
     private String name;
     private String phone_no;
-    private int ImageUrl;
+    private String ImageUrl;
 
     public ContactData(String name, String phone_no) {
         this.name = name;
         this.phone_no = phone_no;
+    }
+
+    public ContactData(String name, String phone_no, String imageUrl) {
+        this.name = name;
+        this.phone_no = phone_no;
+        ImageUrl = imageUrl;
     }
 
     public String getName() {
@@ -26,11 +32,11 @@ public class ContactData {
         this.phone_no = phone_no;
     }
 
-    public int getImageUrl() {
+    public String getImageUrl() {
         return ImageUrl;
     }
 
-    public void setImageUrl(int imageUrl) {
+    public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
     }
 }

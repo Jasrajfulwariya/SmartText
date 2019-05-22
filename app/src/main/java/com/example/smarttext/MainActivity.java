@@ -11,19 +11,28 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import com.example.smarttext.Adapters.MainChatRecyclerAdapter;
 import com.example.smarttext.LogInActivity.LogInManager;
+import com.example.smarttext.utils.ContactData;
 import com.example.smarttext.utils.FireBaseDatabaseManager;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private FireBaseDatabaseManager manager;
+    private SquliteContactinfo contactinfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
         recyclerSetup();
+      //  ArrayList<ContactData>myAllContacts=new ArrayList<>();
+      //  myAllContacts=contactinfo.fetchData();
     }
     public void init()
     {
         manager=new FireBaseDatabaseManager();
+        contactinfo=new SquliteContactinfo(new FirstProfileUpdateActivity());
     }
     public void recyclerSetup()
     {
@@ -126,22 +135,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
-            manager.sandNotActive();
+        /*if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+            manager.sandNotActive();*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
-        manager.sandActiveNow();
+     /*   if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+        manager.sandActiveNow();*/
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
-        manager.sandNotActive();
+       /* if(FirebaseAuth.getInstance().getCurrentUser()!=null)
+        manager.sandNotActive();*/
     }
-
 }
