@@ -17,9 +17,7 @@ import com.example.smarttext.utils.ContactData;
 import com.example.smarttext.utils.FireBaseDatabaseManager;
 import com.example.smarttext.utils.Permission;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     private FireBaseDatabaseManager manager;
     private SquliteContactinfo contactinfo;
@@ -126,13 +124,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+
+
         if(FirebaseAuth.getInstance().getCurrentUser()==null)
         {
             Intent goToLogin =new Intent(MainActivity.this, LogInManager.class);
             startActivity(goToLogin);
             finish();
+
         }
-        else
+        else;
             manager.sandActiveNow();
     }
 

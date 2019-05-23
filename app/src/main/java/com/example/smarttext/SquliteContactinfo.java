@@ -29,7 +29,7 @@ public class SquliteContactinfo extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
-    }
+    } 
     public boolean insertContact(String name,String contact,String image_url)
     {
         SQLiteDatabase db=this.getWritableDatabase();

@@ -44,7 +44,6 @@ public class LogInManager extends AppCompatActivity {
         else flagPermission=true;
         vibe = (Vibrator) LogInManager.this.getSystemService(VIBRATOR_SERVICE);
         loginPhone=(EditText)findViewById(R.id.LoginEditPhone);
-
         }
 
     public void loginSubmit(View view) {

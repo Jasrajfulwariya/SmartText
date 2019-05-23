@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
 import com.example.smarttext.Adapters.ContactListRecyclerAdapter;
 import com.example.smarttext.utils.Config;
 import com.example.smarttext.utils.ContactData;
@@ -67,11 +66,14 @@ public class ContactsActivity extends AppCompatActivity {
         fireBaseRef=FirebaseDatabase.getInstance().getReference();
         contactRecycler=findViewById(R.id.activityContactRecyclerView);
     }
+
     private ArrayList<ContactData> getContactList() {
         ArrayList<ContactData> data=new ArrayList<>();
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
+
+        Toast.makeText(ContactsActivity.this,cur.toString(),Toast.LENGTH_LONG).show();
 
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur.moveToNext()) {
@@ -117,7 +119,11 @@ public class ContactsActivity extends AppCompatActivity {
                                 data.add(new ContactData(name,phoneNo));
                             }
                             }
-                        }
+
+
+                    }
+
+
                     pCur.close();
                 }
             }
