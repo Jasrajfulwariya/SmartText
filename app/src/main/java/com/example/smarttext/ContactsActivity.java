@@ -46,30 +46,19 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
         searchText=findViewById(R.id.contact_search);
         imgsearch=findViewById(R.id.contactSearchIB);
-
-            init();
-                contactData=getContactList();
-                previousData=contactData;
-                contactAdapter=new ContactListRecyclerAdapter(this,contactData);
-                contactRecycler.setAdapter(contactAdapter);
-                contactRecycler.setLayoutManager(new LinearLayoutManager(this));
-                contactData=new ArrayList<>();
+        init();
+        contactData=getContactList();
+        previousData=contactData;
+        contactAdapter=new ContactListRecyclerAdapter(this,contactData);
+        contactRecycler.setAdapter(contactAdapter);
+        contactRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private boolean cheakEqual(String mName) {
-        char a=searchedContact.charAt(0);
-        for(int i=0;i<mName.length();i++)
+        for(int i=0;i<searchedContact.length();i++)
         {
-            if(mName.charAt(i)==a)
-            {
-                int count=0,j;
-                for(j=0;j<searchedContact.length();j++) {
-                    if (mName.charAt(i+j)!= searchedContact.charAt(j))
-                        break;
-                }
-                if(j==searchedContact.length())
-                    return true;
-            }
+            if(mName.regionMatches(true,i,searchedContact,0,searchedContact.length()))
+                return true;
         }
         return false;
     }
@@ -148,6 +137,7 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     public void searchContact(View view) {
+        contactData=new ArrayList<>();
         searchedContact=searchText.getText().toString();
         for (ContactData data:previousData) {
             mName = data.getName();
