@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
+import com.example.smarttext.FirstProfileUpdateActivity;
 import com.example.smarttext.MainActivity;
 import com.example.smarttext.R;
 import com.example.smarttext.utils.Config;
@@ -65,7 +66,7 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
                 signInWithPhoneAuthCredential(phoneAuthCredential);
-                Intent I1=new Intent(OtpVerification.this, MainActivity.class);
+                Intent I1=new Intent(OtpVerification.this, FirstProfileUpdateActivity.class);
                 startActivity(I1);
                 finish();
             }
@@ -136,7 +137,7 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
     }
 
     public void otpToLogin(View view) {
-        Intent I1=new Intent(this,MainActivity.class);
+        Intent I1=new Intent(this,LogInManager.class);
         startActivity(I1);
         finish();
     }
@@ -150,10 +151,10 @@ public class OtpVerification<mCallBacks> extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = task.getResult().getUser();
-                            Intent loggedIn = new Intent(OtpVerification.this,MainActivity.class);
+                            Intent loggedIn = new Intent(OtpVerification.this, FirstProfileUpdateActivity.class);
+                            loggedIn.putExtra(Config.PHONE_NUMBER,phoneVerify);
                             startActivity(loggedIn);
-                            finish();
+
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI

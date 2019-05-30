@@ -2,11 +2,14 @@
     <string name="app_name">SmartText</string>
     <string name="main_heading">Find Your Way To Do Text</string>
     <string name="active_now">Active Now</string>
-    <string name="update_profile">Update Profile</string>
     <string name="contacts">Contacts</string>
     <string name="calls">Calls</string>
     <string name="profile">Profile</string>
     <string name="name">Name</string>
     <string name="phone_number">Phone Number</string>
     <string name="submit">Submit</string>
+    <string name="sikp_this_step">Sikp This Step</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="conform">Conform</string>
+    <string name="type_a_message">Type a Message</string>
 </resources>

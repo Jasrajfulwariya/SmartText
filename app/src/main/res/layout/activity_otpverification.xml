@@ -55,7 +55,7 @@
         android:layout_width="72dp"
         android:layout_height="32dp"
         android:background="@drawable/logintext"
-        android:text="Conform"
+        android:text="@string/conform"
         android:textColor="#FFFFFF" />
 
     <TextView

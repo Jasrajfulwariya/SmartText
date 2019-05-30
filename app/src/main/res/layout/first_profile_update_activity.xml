@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:layout_marginTop="150dp"
+        android:id="@+id/firstProfileFramelayout"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/firstProfileProfileImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/user"
+        app:civ_border_color="@color/grayTransparent"
+        app:civ_border_width="4dp"
+        />
+    <ImageView
+        android:onClick="pickImageFromPhone"
+        android:layout_gravity="bottom|end"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/blue_circle_background"
+        android:padding="10dp"
+        android:src="@drawable/ic_browser_blue_24dp"
+        />
+    </FrameLayout>
+    <Button
+        android:onClick="UpdateProfile"
+        android:id="@+id/firstProfileUpdateBt"
+        android:padding="12dp"
+        android:layout_marginTop="50dp"
+        android:textSize="18sp"
+        android:text="@string/update_profile"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/item_blue_rounded"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/firstProfileFramelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:onClick="SkipThisStep"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/gray"
+        android:textStyle="normal"
+        android:layout_marginBottom="120dp"
+        android:textSize="20sp"
+        android:text="@string/sikp_this_step"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:elevation="2dp"
+        android:id="@+id/firstProfileProgressBar"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

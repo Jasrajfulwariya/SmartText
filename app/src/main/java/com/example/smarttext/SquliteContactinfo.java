@@ -5,51 +5,61 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
+
+import com.example.smarttext.utils.Config;
+import com.example.smarttext.utils.ContactData;
+
+import java.util.ArrayList;
 
 public class SquliteContactinfo extends SQLiteOpenHelper {
-    private static final String contact_Databasename="contact_Database1.db";
-    private static final String mcontact_table="contact_table";
+    private static final String contact_Databasename="contactDatabase.db";
+    private ArrayList<ContactData> data=new ArrayList<>();
+    private static final String TABLE_NAME="contact_table";
     public SquliteContactinfo(Context context) {
         super(context, contact_Databasename,null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table "+mcontact_table+" (user_Name TEXT,user_Contact TEXT,user_Image_url TEXT)");
-
+        db.execSQL("CREATE TABLE IF NOT EXISTS "+TABLE_NAME+" (UserName TEXT,UserContact TEXT,UserImageUrl TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
-    public boolean insert_contact(String name,String contact,int image_url)
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        onCreate(db);
+    } 
+    public boolean insertContact(String name,String contact,String image_url)
     {
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         long result=0;
-        String query="Select user_Contact from "+mcontact_table+" where user_Contact='"+contact+"'";
+        String query="Select UserContact from "+TABLE_NAME+" where UserContact ='"+contact+"'";
         Cursor cursor=db.rawQuery(query,null);
         if(cursor.getCount()<=0)
         {
-            contentValues.put("user_Name",name);
-            contentValues.put("user_Contact",contact );
-            contentValues.put("user_Image_url",image_url );
-            result=db.insert(mcontact_table,null,contentValues);
+            contentValues.put(Config.SQLITE_USERNAME_CI,name);
+            contentValues.put(Config.SQLITE_USER_CONTACT_CI,contact );
+            contentValues.put(Config.SQLITE_USER_IMAGE_URL_CI,image_url );
+            result=db.insert(TABLE_NAME,null,contentValues);
         }
-        if(result==-1)
-            return false;
-        else
-            return true;
+        return result != -1;
 
     }
-    public Cursor fetch_data(String sender_Name)
+    public ArrayList<ContactData> fetchData()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        String query="Select * from "+mcontact_table+"";
+        String query="Select * from "+TABLE_NAME;
         Cursor cursor=db.rawQuery(query,null);
-        return cursor;
-
+        if(cursor!=null&&cursor.moveToNext())
+        {
+            data.add(new ContactData(cursor.getString(0),cursor.getString(1),cursor.getString(2)));
+        }
+        if(data.size()==0)
+            return null;
+        else
+            return data;
     }
 
 }

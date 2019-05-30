@@ -1,18 +1,23 @@
 package com.example.smarttext;
+import android.Manifest;
 import android.content.ContentResolver;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.widget.Toast;
-
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import com.example.smarttext.Adapters.ContactListRecyclerAdapter;
 import com.example.smarttext.utils.Config;
 import com.example.smarttext.utils.ContactData;
@@ -22,85 +27,39 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 public class ContactsActivity extends AppCompatActivity {
     private DatabaseReference fireBaseRef;
     private RecyclerView contactRecycler;
-    ArrayList<ContactData> data;
-    SquliteContactinfo msquilecontact;
     private ArrayList<ContactData> contactData;
-    ArrayList<ContactData> newcontactData;
+    private ArrayList<ContactData> previousData;
+    private EditText searchText;
+    ImageButton imgsearch;
+    String searchedContact;
+    private ContactListRecyclerAdapter contactAdapter;
+    String mName;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
-        Permission.getContactReqPermission(this);
-        if (!Permission.checkPermissionForContact(this))
+        searchText=findViewById(R.id.contact_search);
+        imgsearch=findViewById(R.id.contactSearchIB);
+        init();
+        contactData=getContactList();
+        previousData=contactData;
+        contactAdapter=new ContactListRecyclerAdapter(this,contactData);
+        contactRecycler.setAdapter(contactAdapter);
+        contactRecycler.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private boolean cheakEqual(String mName) {
+        for(int i=0;i<searchedContact.length();i++)
         {
-            init();
-            //TODO: getting Contact Data
-            contactData=getContactList();
-            newcontactData=new ArrayList<>();
-            int a=contactData.size();
-            //FilterData
-            int i=0;
-            msquilecontact=new SquliteContactinfo(this);
-            for(i=0;i<contactData.size();i++)
-            {
-                    msquilecontact.insert_contact(contactData.get(i).getName()
-                            ,contactData.get(i).getPhoneNo(),contactData.get(i).getImageUrl());
-            }
-            Cursor res=msquilecontact.fetch_data("k");
-            StringBuffer result =new StringBuffer();
-            while ((res.moveToNext()))
-            {
-                result.append(res.getString(0));
-                //newcontactData.add(res.getString(0),res.getString(1),1);
-              newcontactData.add(new ContactData(res.getString(0),res.getString(1)));
-         }
-
-         // Toast.makeText(ContactsActivity.this,result,Toast.LENGTH_LONG).show();
-            data=new ArrayList<>();
-            for(ContactData conData:contactData)
-            {
-                final  ContactData data1=conData;
-                DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
-                reference.child(Config.NODE_ALL_CONTACT).orderByChild(Config.NODE_PHONE_NO)
-                        .equalTo(data1.getPhoneNo()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    int i=0;
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.d("Data", i+" :"+data1.getPhoneNo());
-                        i++;
-                        if(dataSnapshot.exists())
-                        {
-                            //TODO: starting Chat Activity
-                            data.add(data1);
-                            Log.d("Posion Of data", "onDataChange: exists");
-                            String dd=data.get(0).getPhoneNo();
-                            dd="5";
-                        }
-                        else
-                        {
-                            //TODO: Starting Invite Activity
-                            Log.d("Posion Of data ", "onDataChange: not exist");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            };
-            ContactListRecyclerAdapter contactAdapter=new ContactListRecyclerAdapter(this,newcontactData);
-            contactRecycler.setAdapter(contactAdapter);
-            contactRecycler.setLayoutManager(new LinearLayoutManager(this));
+            if(mName.regionMatches(true,i,searchedContact,0,searchedContact.length()))
+                return true;
         }
-
-
+        return false;
     }
 
     private void init() {
@@ -174,7 +133,6 @@ public class ContactsActivity extends AppCompatActivity {
         }
         return  data;
     }
-
     private String replace(String phoneNo) {
         String result="";
         for(int i=1;i<=10;i++)
@@ -184,4 +142,16 @@ public class ContactsActivity extends AppCompatActivity {
         return result;
     }
 
+    public void searchContact(View view) {
+        contactData=new ArrayList<>();
+        searchedContact=searchText.getText().toString();
+        for (ContactData data:previousData) {
+            mName = data.getName();
+            if (cheakEqual(mName))
+                contactData.add(data);
+        }
+        contactAdapter=new ContactListRecyclerAdapter(getApplicationContext(),contactData);
+        contactRecycler.setAdapter(contactAdapter);
+        contactRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    }
 }

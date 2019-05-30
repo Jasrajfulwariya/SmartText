@@ -5,23 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
-        android:layout_margin="4dp"
-        android:layout_alignParentEnd="true"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@drawable/chat_image_background"
-        android:id="@+id/imageshareR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp">
-        <ImageView
-            android:id="@+id/sender_img"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
+        android:layout_width="300dp"
+        android:layout_height="300dp">
+        <com.jgabrielfreitas.core.BlurImageView
+            android:id="@+id/subChatRecViewReceiveImage"
+            android:layout_margin="20dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/user"
             android:background="@drawable/chat_image_background"/>
-        </RelativeLayout>
+        <ImageButton
+            android:id="@+id/subChatDownloadButton"
+            android:src="@drawable/ic_file_download_blue_24dp"
+            android:background="@drawable/background_rounded_download_image"
+            android:layout_centerInParent="true"
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+    </RelativeLayout>
 </RelativeLayout>
